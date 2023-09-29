@@ -1,10 +1,20 @@
 ---
 author:
-- Adam Furman
+- name: Adam Furman
+  orcid: 0000-0002-6675-1064
+  equal-contrib: true
+  affiliation: 1
+affiliations:
+ - name: University of Oxford Mathematical Institute, Oxford, United Kingdom
+   index: 1
 bibliography:
 - pysci.bib
-date: September 29, 2023
-title: "[MathMat]{.smallcaps}: A Mathematically Aware Matrix Library"
+date: 29 September 2023
+title: "MathMat: A Mathematically Aware Matrix Library"
+tags:
+  - Python
+  - Linear Algebra
+  - Matrix
 ---
 
 # Introduction
@@ -39,7 +49,7 @@ of any mathematical properties associated with that data. It is left to
 the programmer to keep track of such properties in a specific
 application.
 
-The [MathMat]{.smallcaps} library provides a mathematically aware
+The MathMat library provides a mathematically aware
 toolbox for working with numerical linear algebra problems. The core
 idea is to represent a matrix in two parts: the data, comprising the
 entries of the matrix, and a collection of known properties about the
@@ -49,11 +59,11 @@ addition, the methods for computing properties are stateful, in that
 they respond to what other properties have already been computed. For
 example, if a matrix is triangular, the eigenvalues are the entries on
 the diagonal. Thus, when computing eigenvalues of a matrix known to be
-triangular, [MathMat]{.smallcaps} returns the diagonal instead of
+triangular, MathMat returns the diagonal instead of
 performing an additional expensive computation.
 
 In addition to mathematical awareness of matrix properties,
-[MathMat]{.smallcaps} contains implementations of some matrix
+MathMat contains implementations of some matrix
 algorithms, specifically Krylov subspace methods. The package has
 visualization capabilities as well, focusing on generating plots that
 are aesthetically pleasing and clearly visible within academic papers,
@@ -61,7 +71,7 @@ with focus again towards those useful in numerical linear algebra.
 
 ## The Library Structure
 
-[MathMat]{.smallcaps} is organized into one library with five
+MathMat is organized into one library with five
 submodules, including the main module. Each submodule covers a specific
 range of functionality, outlined here.
 
@@ -191,13 +201,13 @@ their methods have the prefix `is_*`, those of type `V` are *values*.
 | `triangular_U`      | `C`  | `True` if $M$ is upper (right) triangular.                                    |
 | `unitary`           | `C`  | `True` if $M$ is unitary, $M^H = M^{-1}$.                                    |
 
-Some [MathMat]{.smallcaps} functions may store additional properties
+Some MathMat functions may store additional properties
 using the `set` method of the `Matrix`, but these are not accessible
 using methods.
 
 ## Efficiency through Computable Properties
 
-The philosophy of [MathMat]{.smallcaps} is to increase efficiency for
+The philosophy of MathMat is to increase efficiency for
 multiple computations on the same matrix. Efficiency of computations is
 preferred over memory consumption: storing properties will never be more
 efficient in terms of storage requirements. Under this philosophy, it is
@@ -205,7 +215,7 @@ acceptable for an individual initial computation to be more
 computationally complex, as long as that increased complexity produces
 knowledge about the matrix that can be reused later.
 
-An illustrative example of the [MathMat]{.smallcaps} philosophy is the
+An illustrative example of the MathMat philosophy is the
 `eigenvalues` method:
 
 ```python
@@ -247,22 +257,21 @@ SciPy to find eigenvalues, one of which is optimized for Hermitian
 matrices. Thus, another check is performed, once again yielding valuable
 information for future tasks.
 
-A call to [MathMat]{.smallcaps}'s `eigenvalues` may take substantially
+A call to MathMat's `eigenvalues` may take substantially
 longer than directly invoking `scipy.linalg.eigvals`, but it is also
 much more informative. For example, if the matrix was found to be upper
 triangular then computing the determinant, checking for invertability,
 and solving the linear equation $Mx = b$ will all be automatically
 optimized, without the check for triangularity being performed again.
 
-Another consistent advantage of [MathMat]{.smallcaps} is the equivalence
+Another consistent advantage of MathMat is the equivalence
 of sparse and dense matrix representations. While NumPy arrays and SciPy
 sparse objects are often compatible, many NumPy specific functions
-cannot handle a mix of the two. [MathMat]{.smallcaps} abstracts the
+cannot handle a mix of the two. MathMat abstracts the
 distinction away, automatically adapting when a sparse representation is
 used, and employing the appropriate sparse algorithms to take full
 advantage of the sparse format. An example is the `is_diagonal` method
-(Appendix [8.2](#code:is_diagonal){reference-type="ref"
-reference="code:is_diagonal"}), which uses a check based on the
+(Appendix \ref{code:is_diagonal}), which uses a check based on the
 `count_nonzero()` method of sparse objects, or one of two different
 checks for dense matrices. If the matrix is found to be diagonal, it is
 automatically stored as a `DiagonalMatrix` in sparse format.
@@ -397,7 +406,7 @@ solve the system. The implemented solvers are:
   triangular $L$ or $U$.
 
 The `automatic` method is available in Appendix
-[8.3](#code:automatic){reference-type="ref" reference="code:automatic"}.
+\ref{code:automatic}.
 It prefers using an inverse if one exists[^3], and will then check
 triangularity and the existence of a QR or LU decomposition before
 falling back on using GMRES. Note that using `automatic` on a `Matrix`
@@ -418,7 +427,9 @@ The Generalized Mininimum Residual Method is an example of a Krylov
 subspace method for solving the (possibly overdetermined) linear system
 $Ax = b$. It is an iterative algorithm where at iteration $k$, $x_k$
 satisfies
+
 $$x_k = \underset{x_k \in \mathcal{K}_k}{\text{argmin}} \lVert \underbrace{Ax_k - b}_{\text{residual } r_k} \rVert_2$$
+
 where $r_k = Ax_k - b$ is called the residual and is minimized over all
 $x_k$ within the Krylov subspace $\mathcal{K}_k$ of dimension $k$
 [@Saad1986]. As the dimension of the subspace searched over grows, $x_k$
@@ -428,14 +439,16 @@ The effectiveness of GMRES depends on the properties of the Krylov
 subspace, named after applied mathematician Alexey Krylov [@Krylov1931].
 A Krylov subspace is the span of multiplications of increasing powers of
 a matrix $A$ and a vector $b$:
-$$\mathcal{K}_k = \text{span} \left\{ b, Ab, A^2b, \hdots, A^{k-1}b \right\}$$
+
+$$\mathcal{K}_k = \text{span} \left\{ b, Ab, A^2b, ..., A^{k-1}b \right\}$$
+
 which forms a linearly independent set up to some critical dimension
 $k = k_\text{crit.}$, at which iteration the solution achieved via GMRES
 is exact [@Saad1986]. Searching for solutions $x_k$ in $\mathcal{K}_k$
 yields increasingly accurate approximations for most matrices.
 
 While the vectors
-$\left\\{ b, Ab, A^2b, \hdots, A^{k_\text{crit.}-1}b \right\\}$ are
+$\left\\{ b, Ab, A^2b, ... , A^{k_\text{crit.}-1}b \right\\}$ are
 mathematically linearly independent, in floating-point arithmetic they
 quickly lose independence. The limitation can be bypassed by instead
 constructing an orthonormal basis for $\mathcal{K}_k$. The algorithm for
@@ -447,7 +460,9 @@ $q_{k} = A q_{k-1}$ and orthogonalizing it with respect to all previous
 $q_j$s, recording the orthogonalization dot products $q_j^H q_k$ in an
 upper Hessenberg matrix $H_k$ [@Saad1986]. The minimization problem is
 then rewritten as:
-$$y_k = \underset{y_k \in \mathbb{R}^N}{\text{argmin}} \Big\Vert H_k y - \lVert b \rVert_2 \mathbf{e}_1 \Big\Vert_2 && \text{and} && x_k = Q_k y_k$$
+
+$$y_k = \underset{y_k \in \mathbb{R}^N}{\text{argmin}} \Big\Vert H_k y - \lVert b \rVert_2 \mathbf{e}_1 \Big\Vert_2  \text{ and } x_k = Q_k y_k$$
+
 where $\mathbf{e}_1$ is the first unit vector of size $N$. The upper
 Hessenberg structure yields a much more efficiently solvable
 least-squares problem for $y_k$ [@Saad1986].
@@ -471,8 +486,7 @@ Gram-Schmidt (MGS) still fails, repeated MGS, achieved by
 re-orthogonalizing the resulting vector, is employed [@Daniel1976]. Both
 MGS and re-orthogonalizing MGS are implemented, as
 `mathmat.solve.Krylov.arnoldi_mgs` (available in Appendix
-[8.4](#code:arnoldi_mgs){reference-type="ref"
-reference="code:arnoldi_mgs"}) and `arnoldi_mgs_2x` respectively.
+\ref{code:arnoldi_mgs}) and `arnoldi_mgs_2x` respectively.
 
 A novel GMRES-based algorithm, developed by Nakatsukasa and Tropp
 [@Nakatsukasa2022], is Sketched GMRES. sGMRES differs from GMRES in two
@@ -489,7 +503,7 @@ GMRES[^4], and is currently being further studied.
 
 # Visualizations
 
-The final major submodule of [MathMat]{.smallcaps} is `mathmat.vis`, the
+The final major submodule of MathMat is `mathmat.vis`, the
 visualizations toolkit. The goal of this submodule is to provide
 aesthetically pleasing plots that fit well within mathematical
 publications with minimum adjustment required. `matplotlib`
@@ -503,7 +517,7 @@ and math is changed to Computer Modern, the default LaTeX typeface.
 Finally, the thickness of lines is slightly increased to yield better
 visibility when embedded into papers. All figures included in this
 report have been exported as `.svg` files using the
-[MathMat]{.smallcaps} configuration.
+MathMat configuration.
 
 Each plot is an instance of the `Plot` class. A generic `Plot` object
 displays no data, but is capable of setting the title, $x$ and $y$ axis
@@ -555,24 +569,22 @@ the visualization submodule without displaying any of the plots. To see
 the plots, `demo_visualizations.py` can be run to see plots
 representative of the library's functionality, mirroring tasks that
 might be done in the course of normal use. A selection of these plots is
-reproduced in Appendix [8.5](#visualizations){reference-type="ref"
-reference="visualizations"}.
+reproduced in Appendix \ref{visualizations}.
 
-To run the demonstrations and tests, first install [MathMat]{.smallcaps}
+To run the demonstrations and tests, first install MathMat
 using the instructions in Appendix
-[8.1](#install_instructions){reference-type="ref"
-reference="install_instructions"}. Make sure to additionally install
+\ref{install_instructions}. Make sure to additionally install
 `pytest`. Then, ensuring that the `tests` directory and
 `demo_visualizations.py` file exists, run `pytest`. Note that it is
 expected that the visualization tests will raise warnings, as the
 figures are not shown.
 
-Interactive documentation for [MathMat]{.smallcaps} is also available in
+Interactive documentation for MathMat is also available in
 the `docs` folder. Simply open the `index.html` file in any web browser.
 
 # Summary and Conclusion
 
-The [MathMat]{.smallcaps} package is a purpose-specific Python library
+The MathMat package is a purpose-specific Python library
 for numerical linear algebra. It aims to provide a mathematically-aware
 suite of tools for working with matrices, utilizing the results of past
 computations on the same `Matrix` object to identify which algorithms
@@ -590,9 +602,7 @@ work, several key methods are reproduced in the Appendix. Effort has
 been taken to render the code legible and thoroughly commented, and to
 adhere to standard Python guidelines.
 
-After following the installation instructions (Appendix
-[8.1](#install_instructions){reference-type="ref"
-reference="install_instructions"}), try the following to see the library
+After following the installation instructions (Appendix \ref{install_instructions}), try the following to see the library
 at work: in a new Python shell, run the commands
 
 ```python
@@ -615,9 +625,10 @@ width="0.9\\columnwidth"}
 
 # Appendix
 
-## Installation Instructions {#install_instructions}
+## Installation Instructions
+\label{install_instructions}
 
-[MathMat]{.smallcaps} can be installed in several ways. In all cases, it
+MathMat can be installed in several ways. In all cases, it
 is recommended to create a new virtual environment using the command
 `py -m venv venv` and then activating the virtual environment using the
 appropriate command for the operating system.
@@ -628,13 +639,14 @@ can be installed by running
 code of the library can be unpacked from `mathmat-1.0.0.tar.gz`, giving
 easy access to the tests and demo visualizations.
 
-[MathMat]{.smallcaps} depends on `numpy`, `scipy`, `matplotlib`, and
+MathMat depends on `numpy`, `scipy`, `matplotlib`, and
 `lazy-import`, which must be installed for the library to work. `pip`
 will do so automatically if installing from the `.whl` file. The full
 development environment can be recreated by installing the packages
 listed in `requirements_dev.txt`.
 
-## The `is_diagonal` Method {#code:is_diagonal}
+## The `is_diagonal` Method
+\label{code:is_diagonal}
 
 ```python
     @_computable_property("diagonal")
@@ -664,7 +676,8 @@ listed in `requirements_dev.txt`.
         return check
 ```
 
-## The `automatic` Method {#code:automatic}
+## The `automatic` Method
+\label{code:automatic}
 
 ```python
 def automatic(A: Matrix, b: Vector, get_method=False):
@@ -701,7 +714,8 @@ def automatic(A: Matrix, b: Vector, get_method=False):
     return A.lin_solver(b)
 ```
 
-## The `arnoldi_mgs` Method {#code:arnoldi_mgs}
+## The `arnoldi_mgs` Method
+\label{code:arnoldi_mgs}
 
 ```python
     def arnoldi_mgs(A: Matrix, b: Vector, k: int, tolerance=1e-4, **_):
@@ -751,7 +765,8 @@ def automatic(A: Matrix, b: Vector, get_method=False):
         return K_k, H
 ```
 
-## Selected Visualizations {#visualizations}
+## Selected Visualizations
+\label{visualizations}
 
 **Eigenvalues of the `west132` Matrix**
 
@@ -786,5 +801,4 @@ convention.
 which $M^{-1}$ can be computed in a numerically stable way.
 
 [^4]: Such as when applied to the `FS 680` matrix used as an example in
-Appendix [8.5](#visualizations){reference-type="ref"
-reference="visualizations"}.
+Appendix \ref{visualizations}.
