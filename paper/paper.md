@@ -176,7 +176,7 @@ their methods have the prefix `is_*`, those of type `V` are *values*.
 | `diagonalizable`    | `C`  | `True` if $M$ is similar to a diagonal matrix $D$ such that $M = P D P^{-1}$. |
 | `eigenvalues`       | `V`  | The eigenvalues $\lambda$ satisfying $Mv = \lambda v$ sorted by increasing magnitude. |
 | `eigenvectors`      | `V`  | The eigenvectors $v$ satisfying $Mv = \lambda v$ sorted by the magnitude of their corresponding eigenvalues. |
-| `hermitian`         | `C`  | `True` if $M$ is Hermitian and thus $M^H = M^{-1}$.                          |
+| `hermitian`         | `C`  | `True` if $M$ is Hermitian and thus $M^H = M^{-1}$[^1].                          |
 | `inverse`           | `V`  | The inverse $M^{-1}$, raises an error if $M$ is not invertible.               |
 | `invertible`        | `C`  | `True` if $M$ is invertible.                                                 |
 | `lin_solver`        | `V`  | A callable which, given a `Vector` $b$, solves $Mx = b$ for $x$.             |
@@ -191,7 +191,7 @@ their methods have the prefix `is_*`, those of type `V` are *values*.
 | `sparse`            | `C`  | `True` if the `entries` property of $M$ is a SciPy sparse object.             |
 | `sparsity`          | `V`  | The fraction of entries of $M$ which are non-zero.                           |
 | `square`            | `C`  | `True` if $M$ is square.                                                     |
-| `svd`               | `V`  | A `tuple` with the `(U, S, V)` matrices of the singular value decomposition $M = U \Sigma V^H$. |
+| `svd`               | `V`  | A `tuple` with the `(U, S, V)` matrices of the singular value decomposition $M = U \Sigma V^H$[^2]. |
 | `symmetric`         | `C`  | `True` if $M$ is symmetric, $M^\top  = M$.                                    |
 | `to_dense`          | `V`  | A representation of $M$ using a NumPy array instead of a SciPy sparse object. |
 | `to_sparse`         | `V`  | A representation of $M$ using a SciPy `csc_array` instead of a NumPy array.   |
