@@ -2,11 +2,10 @@
 author:
 - name: Adam Furman
   orcid: 0000-0002-6675-1064
-  equal-contrib: true
   affiliation: 1
 affiliations:
- - name: University of Oxford Mathematical Institute, Oxford, United Kingdom
-   index: 1
+- name: University of Oxford Mathematical Institute, Oxford, United Kingdom
+  index: 1
 bibliography:
 - pysci.bib
 date: 29 September 2023
