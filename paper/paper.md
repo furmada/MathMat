@@ -447,7 +447,7 @@ is exact [@Saad1986]. Searching for solutions $x_k$ in $\mathcal{K}_k$
 yields increasingly accurate approximations for most matrices.
 
 While the vectors
-$\left\\{ b, Ab, A^2b, ... , A^{k_\text{crit.}-1}b \right\\}$ are
+$\left\{ b, Ab, A^2b, ... , A^{k_\text{crit.}-1}b \right\}$ are
 mathematically linearly independent, in floating-point arithmetic they
 quickly lose independence. The limitation can be bypassed by instead
 constructing an orthonormal basis for $\mathcal{K}_k$. The algorithm for
@@ -475,7 +475,7 @@ Constructing an orthonormal basis for $\mathcal{K}_k$ encounters
 problems with floating point arithmetic. An object of study outside the
 scope of this project is to what extent the convergence of GMRES and
 related algorithms is impacted by numerical defects in the orthogonality
-of the vectors $\left\\{ q_j \right\\}$. The \"textbook\" procedure for
+of the vectors $\left\{ q_j \right\}$. The \"textbook\" procedure for
 orthogonalization, the Gram-Schmidt process, is known to be numerically
 unstable in its basic form. A mathematically equivalent variant, called
 Modified Gram-Schmidt, is therefore used, and has been proven to be
