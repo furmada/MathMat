@@ -620,8 +620,8 @@ tiled([MagnitudePlot(G, title="$G$"), MagnitudePlot(P, title="$P$"), MagnitudePl
 
 The code should produce an image similar the one shown here.
 
-![image](diagonalization.svg){#fig:diagonalization
-width="0.9\\columnwidth"}
+![image](diagonalization.svg)
+\label{fig:diagonalization}
 
 # Appendix
 
@@ -770,18 +770,21 @@ def automatic(A: Matrix, b: Vector, get_method=False):
 
 **Eigenvalues of the `west132` Matrix**
 
-![image](eigenvalues.svg){#fig:eigenvalues width="0.75\\columnwidth"}
+![image](eigenvalues.svg)
+\label{fig:eigenvalues}
 
 **Orthogonality of the Krylov Subspace of the `FS 680` Matrix**
 
-![image](krylov.svg){#fig:krylov width="0.6\\columnwidth"}
+![image](krylov.svg)
+\label{fig:krylov}
 
 Shaded areas off the diagonal indicate that the Arnoldi process failed
 to generate a numerically orthogonal basis for the Krylov subspace.
 
 **Accuracy of Low-Rank Approximations by the HMT Algorithm**
 
-![image](hmt.svg){#fig:hmt width="0.75\\columnwidth"}
+![image](hmt.svg)
+\label{fig:hmt}
 
 The HMT Algorithm is a way of generating low-rank approximations to a
 matrix, for more details see Nakatsukasa [@Nakatsukasa2020]. The
@@ -789,7 +792,8 @@ algorithm is implemented in the `mathmat.random` submodule.
 
 **Entries of the $H$ Matrix of the Arnoldi Process**
 
-![image](magnitude.svg){#fig:magnitude width="0.6\\columnwidth"}
+![image](magnitude.svg)
+\label{fig:magnitude}
 
 [^1]: Note that $M^H$ refers to the conjugate transpose, so
 $M^H = \left(\bar{M}\right)^\top$
