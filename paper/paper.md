@@ -1,5 +1,5 @@
 ---
-author:
+authors:
 - name: Adam Furman
   orcid: 0000-0002-6675-1064
   affiliation: 1
