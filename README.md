@@ -102,4 +102,5 @@ Instantiating a `Plot` object does not immediately display it. Instead, one of t
 
 ### More Documentation
 
-The `docs` folder contains complete documentation for the package.
+The `docs` folder contains complete documentation for the package. The documentation is also available at
+https://www.adamfurman.sk/mathmat/mathmat.html
