@@ -135,7 +135,7 @@ def _computable_property(name):
 
 A method `is_foo()` defining the property `foo` is then decorated as
 
-```{.python
+```python
 @_computable_property("foo")
 def is_foo(self): ...
 ```
@@ -152,46 +152,44 @@ the decorated method ever being called. If the value does not exist,
 then the decorated method is called to compute it, and the value is
 stored in the `_computed` dictionary.
 
-A alphabetized table of the Computable Properties of a `Matrix` $M$ is
+An alphabetized table of the Computable Properties of a `Matrix` $M$ is
 given below. All Computable Properties of type `C` are *checks* and
 their methods have the prefix `is_*`, those of type `V` are *values*.
 
-  **Property Name**   **Type**   **Description**
-
-  ------------------- ---------- --------------------------------------------------------------------------------------------------------------
-
-  `complex`           `C`        `True` if $M$ has nonzero complex entries.
-  `conjugate`         `V`        The complex conjugate $M^*$ of $M$.
-  `cond_2`            `V`        The condition number $\kappa_2(M)$.
-  `determinant`       `V`        The determinant $| M |$.
-  `diagonal`          `C`        `True` if $M$ only has non-zero entries on the main diagonal.
-  `diagonalizable`    `C`        `True` if $M$ is similar to a diagonal matrix $D$ such that $M = P D P^{-1}$.
-  `eigenvalues`       `V`        The eigenvalues $\lambda$ satisfying $Mv = \lambda v$ sorted by increasing magnitude.
-  `eigenvectors`      `V`        The eigenvectors $v$ satisfying $Mv = \lambda v$ sorted by the magnitude of their corresponding eigenvalues.
-  `hermitian`         `C`        `True` if $M$ is Hermitian and thus $M^H = M^{-1}$ ([^1]).
-  `inverse`           `V`        The inverse $M^{-1}$, raises an error if $M$ is not invertible.
-  `invertible`        `C`        `True` if $M$ is invertible.
-  `lin_solver`        `V`        A callable which, given a `Vector` $b$, solves $Mx = b$ for $x$.
-  `norm_2`            `V`        The 2-norm of the matrix $\lVert M \rVert_2$.
-  `normal`            `C`        `True` if $M$ is normal and thus $M M^H = M^H M$.
-  `nullity`           `V`        The dimension of the kernel of $M$.
-  `orthogonal`        `C`        `True` if $M$ is orthogonal and thus $M^\top = M^{-1}$.
-  `posdef`            `C`        `True` if $M$ is positive-definite, $x^\top M x > 0 \: \forall x$.
-  `qr`                `V`        A `tuple` with the `(Q, R)` decomposition $M = QR$.
-  `rank`              `V`        The dimension of the column space of $M$.
-  `sigmas`            `V`        The singular values of $M$ in decreasing magnitude.
-  `sparse`            `C`        `True` if the `entries` property of $M$ is a SciPy sparse object.
-  `sparsity`          `V`        The fraction of entries of $M$ which are non-zero.
-  `square`            `C`        `True` if $M$ is square.
-  `svd`               `V`        A `tuple` with the `(U, S, V)`[^2] matrices of the singular value decomposition $M = U \Sigma V^H$.
-  `symmetric`         `C`        `True` if $M$ is symmetric, $M^\top  = M$.
-  `to_dense`          `V`        A representation of $M$ using a NumPy array instead of a SciPy sparse object.
-  `to_sparse`         `V`        A representation of $M$ using a SciPy `csc_array` instead of a NumPy array.
-  `trace`             `V`        The sum of the diagonal of $M$.
-  `transpose`         `C`        The transpose $M^\top$ of $M$.
-  `triangular_L`      `C`        `True` if $M$ is lower (left) triangular.
-  `triangular_U`      `C`        `True` if $M$ is upper (right) triangular.
-  `unitary`           `C`        `True` if $M$ is unitary, $M^H = M^{-1}$.
+| Property Name       | Type | Description                                                                   |
+|---------------------|------|-------------------------------------------------------------------------------|
+| `complex`           | `C`  | `True` if $M$ has nonzero complex entries.                                   |
+| `conjugate`         | `V`  | The complex conjugate $M^*$ of $M$.                                          |
+| `cond_2`            | `V`  | The condition number $\kappa_2(M)$.                                          |
+| `determinant`       | `V`  | The determinant $| M |$.                                                   |
+| `diagonal`          | `C`  | `True` if $M$ only has non-zero entries on the main diagonal.                |
+| `diagonalizable`    | `C`  | `True` if $M$ is similar to a diagonal matrix $D$ such that $M = P D P^{-1}$. |
+| `eigenvalues`       | `V`  | The eigenvalues $\lambda$ satisfying $Mv = \lambda v$ sorted by increasing magnitude. |
+| `eigenvectors`      | `V`  | The eigenvectors $v$ satisfying $Mv = \lambda v$ sorted by the magnitude of their corresponding eigenvalues. |
+| `hermitian`         | `C`  | `True` if $M$ is Hermitian and thus $M^H = M^{-1}$.                          |
+| `inverse`           | `V`  | The inverse $M^{-1}$, raises an error if $M$ is not invertible.               |
+| `invertible`        | `C`  | `True` if $M$ is invertible.                                                 |
+| `lin_solver`        | `V`  | A callable which, given a `Vector` $b$, solves $Mx = b$ for $x$.             |
+| `norm_2`            | `V`  | The 2-norm of the matrix $\lVert M \rVert_2$.                                |
+| `normal`            | `C`  | `True` if $M$ is normal and thus $M M^H = M^H M$.                             |
+| `nullity`           | `V`  | The dimension of the kernel of $M$.                                          |
+| `orthogonal`        | `C`  | `True` if $M$ is orthogonal and thus $M^\top = M^{-1}$.                      |
+| `posdef`            | `C`  | `True` if $M$ is positive-definite, $x^\top M x > 0 \: \forall x$.           |
+| `qr`                | `V`  | A `tuple` with the `(Q, R)` decomposition $M = QR$.                          |
+| `rank`              | `V`  | The dimension of the column space of $M$.                                    |
+| `sigmas`            | `V`  | The singular values of $M$ in decreasing magnitude.                           |
+| `sparse`            | `C`  | `True` if the `entries` property of $M$ is a SciPy sparse object.             |
+| `sparsity`          | `V`  | The fraction of entries of $M$ which are non-zero.                           |
+| `square`            | `C`  | `True` if $M$ is square.                                                     |
+| `svd`               | `V`  | A `tuple` with the `(U, S, V)` matrices of the singular value decomposition $M = U \Sigma V^H$. |
+| `symmetric`         | `C`  | `True` if $M$ is symmetric, $M^\top  = M$.                                    |
+| `to_dense`          | `V`  | A representation of $M$ using a NumPy array instead of a SciPy sparse object. |
+| `to_sparse`         | `V`  | A representation of $M$ using a SciPy `csc_array` instead of a NumPy array.   |
+| `trace`             | `V`  | The sum of the diagonal of $M$.                                              |
+| `transpose`         | `C`  | The transpose $M^\top$ of $M$.                                               |
+| `triangular_L`      | `C`  | `True` if $M$ is lower (left) triangular.                                     |
+| `triangular_U`      | `C`  | `True` if $M$ is upper (right) triangular.                                    |
+| `unitary`           | `C`  | `True` if $M$ is unitary, $M^H = M^{-1}$.                                    |
 
 Some [MathMat]{.smallcaps} functions may store additional properties
 using the `set` method of the `Matrix`, but these are not accessible
@@ -319,7 +317,7 @@ Property, the inverse is not actually computed, but rather a simplified
 The existence of a QR factorization, for example, is detected when
 solving a least-squares problem:
 
-```{.python
+```python
 # in mathmat.solve.lstsq
 if "qr" in A._computed:
     # Use the QR of A if it exists
@@ -330,7 +328,7 @@ if "qr" in A._computed:
 where the `lin_solver` method then recognizes the triangular nature of
 $R$ without checking, as `qr` has set the `triangular_U` property,
 
-```{.python
+```python
 # in Matrix.lin_solver -> mathmat.solve.automatic
 elif A.is_triangular_L() or A.is_triangular_U():
     # A triangular matrix can be solved using a faster algorithm.
@@ -340,7 +338,7 @@ elif A.is_triangular_L() or A.is_triangular_U():
 and finally the solution is found using the optimized algorithm
 `solve_triangular`.
 
-```{.python
+```python
 # in mathmat.solve
 def triangular(A: Matrix, b: Vector, tolerance=1e-10):
     """Solve Ax=b for x for a triangular A."""
@@ -390,7 +388,7 @@ solve the system. The implemented solvers are:
   explicitly.
 
 - `lstsq`: Solves the least-squares, minimum norm problem
-  $$x = \min \lVert Ax - b \rVert_2$$
+  $x = \min \lVert Ax - b \rVert_2$
 
 - `lu`: Solves the linear system $Ax = b$ by computing the LU
   factorization and then solving two triangular systems.
@@ -420,7 +418,7 @@ The Generalized Mininimum Residual Method is an example of a Krylov
 subspace method for solving the (possibly overdetermined) linear system
 $Ax = b$. It is an iterative algorithm where at iteration $k$, $x_k$
 satisfies
-$$x_k = \underset{x_k \in \mathcal{K}_k}{\operatorname{argmin}} \lVert \underbrace{Ax_k - b}_{\text{residual } r_k} \rVert_2$$
+$$x_k = \underset{x_k \in \mathcal{K}_k}{\text{argmin}} \lVert \underbrace{Ax_k - b}_{\text{residual } r_k} \rVert_2$$
 where $r_k = Ax_k - b$ is called the residual and is minimized over all
 $x_k$ within the Krylov subspace $\mathcal{K}_k$ of dimension $k$
 [@Saad1986]. As the dimension of the subspace searched over grows, $x_k$
@@ -430,14 +428,14 @@ The effectiveness of GMRES depends on the properties of the Krylov
 subspace, named after applied mathematician Alexey Krylov [@Krylov1931].
 A Krylov subspace is the span of multiplications of increasing powers of
 a matrix $A$ and a vector $b$:
-$$\mathcal{K}_k = \operatorname{span} \left\{ b, Ab, A^2b, \hdots, A^{k-1}b \right\}$$
+$$\mathcal{K}_k = \text{span} \left\{ b, Ab, A^2b, \hdots, A^{k-1}b \right\}$$
 which forms a linearly independent set up to some critical dimension
 $k = k_\text{crit.}$, at which iteration the solution achieved via GMRES
 is exact [@Saad1986]. Searching for solutions $x_k$ in $\mathcal{K}_k$
 yields increasingly accurate approximations for most matrices.
 
 While the vectors
-$\left\{ b, Ab, A^2b, \hdots, A^{k_\text{crit.}-1}b \right\}$ are
+$\left\\{ b, Ab, A^2b, \hdots, A^{k_\text{crit.}-1}b \right\\}$ are
 mathematically linearly independent, in floating-point arithmetic they
 quickly lose independence. The limitation can be bypassed by instead
 constructing an orthonormal basis for $\mathcal{K}_k$. The algorithm for
@@ -449,7 +447,7 @@ $q_{k} = A q_{k-1}$ and orthogonalizing it with respect to all previous
 $q_j$s, recording the orthogonalization dot products $q_j^H q_k$ in an
 upper Hessenberg matrix $H_k$ [@Saad1986]. The minimization problem is
 then rewritten as:
-$$y_k = \underset{y_k \in \mathbb{R}^N}{\operatorname{argmin}} \Big\Vert H_k y - \lVert b \rVert_2 \mathbf{e}_1 \Big\Vert_2 && \text{and} && x_k = Q_k y_k$$
+$$y_k = \underset{y_k \in \mathbb{R}^N}{\text{argmin}} \Big\Vert H_k y - \lVert b \rVert_2 \mathbf{e}_1 \Big\Vert_2 && \text{and} && x_k = Q_k y_k$$
 where $\mathbf{e}_1$ is the first unit vector of size $N$. The upper
 Hessenberg structure yields a much more efficiently solvable
 least-squares problem for $y_k$ [@Saad1986].
@@ -463,7 +461,7 @@ Constructing an orthonormal basis for $\mathcal{K}_k$ encounters
 problems with floating point arithmetic. An object of study outside the
 scope of this project is to what extent the convergence of GMRES and
 related algorithms is impacted by numerical defects in the orthogonality
-of the vectors $\left\{ q_j \right\}$. The \"textbook\" procedure for
+of the vectors $\left\\{ q_j \right\\}$. The \"textbook\" procedure for
 orthogonalization, the Gram-Schmidt process, is known to be numerically
 unstable in its basic form. A mathematically equivalent variant, called
 Modified Gram-Schmidt, is therefore used, and has been proven to be
@@ -597,7 +595,7 @@ After following the installation instructions (Appendix
 reference="install_instructions"}), try the following to see the library
 at work: in a new Python shell, run the commands
 
-```{.python
+```python
 # Import necessary parts of the library
 from mathmat.random import Gaussian
 from mathmat.factor import diagonalization
