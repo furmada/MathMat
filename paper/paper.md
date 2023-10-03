@@ -27,7 +27,7 @@ performing an additional expensive computation.
 
 # Statement of Need
 
-The commonly used libraries NumPy and SciPy  both have ways to represent matrices numerically, and methods of computing or checking various matrix properties. However, the provided representations of matrices have no sense of their own \"matrix-ness,\" that is, they are collections of data with no awareness of any mathematical properties associated with that data.
+The commonly used libraries NumPy [@NumPy] and SciPy [@SciPy] both have ways to represent matrices numerically, and methods of computing or checking various matrix properties. However, the provided representations of matrices have no sense of their own \"matrix-ness,\" that is, they are collections of data with no awareness of any mathematical properties associated with that data.
 
 MathMat is useful as a wrapper for the matrix-related functionality of NumPy and SciPy. In addition to the aforementioned leveraging of mathematical properties to simplify computations, MathMat also unifies working with dense and sparse matrices, allowing for automatic efficient data storage. MathMat is written in a way designed to be extensible and customizable for a variety of potential research contexts, from numerical analysis to data processing.
 
@@ -84,7 +84,9 @@ checks for dense matrices. If the matrix is found to be diagonal, it is automati
 MathMat implements several common types of matrix factorizations.
 The `Matrix` instances of factored matrices have Computable Properties `set` immediately on creation, meaning that the mathematical knowledge of the factorization is preserved and can be automatically used to simplify potential further computations. The existence of a QR factorization, for example, is detected when solving a least-squares problem and a more efficient triangular solver is used. 
 
-MathMat likewise implements several methods for solving $Ax = b$. In keeping with the philosophy of the module, the `automatic` solver method uses the properties of the matrix $A$ to pick the most efficient algorithm to solve the system. It prefers using an inverse if one exists, under the assumption that a matrix with a set `inverse` is one for which $M^{-1}$ can be computed in a numerically stable way, and will then check triangularity and the existence of a QR or LU decomposition before falling back on using GMRES [@Saad1986].
+MathMat likewise implements several methods for solving $Ax = b$. In keeping with the philosophy of the module, the `automatic` solver method uses the properties of the matrix $A$ to pick the most efficient algorithm to solve the system. It prefers using an inverse if one exists, under the assumption that a matrix with a set `inverse` is one for which $M^{-1}$ can be computed in a numerically stable way, and will then check triangularity and the existence of a QR or LU decomposition before falling back on using GMRES [@Saad1986]. MathMat also implements the Sketched GMRES algorithm of Nakatsukasa and Tropp, which is subject to active research [@Nakatsukasa2022].
 
 Finally, the visualization submodule provides aesthetically pleasing plots that fit well within mathematical publications with minimum adjustment required. MatPlotLib is used as the backend for producing the plots, and several aesthetic adjustments are made to the default configuration of
 `matplotlib`.
+
+# References
