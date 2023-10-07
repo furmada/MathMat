@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "mathmat"
 version = "1.0.0"
 description = "A mathematically aware matrix library."
+readme = "README.md"
 license = "GPL-3.0-only"
 authors = [
     { name="Adam Furman", email="adam@adamfurman.sk" }
@@ -21,4 +22,10 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Topic :: Scientific/Engineering :: Mathematics"
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/furmada/MathMat"
